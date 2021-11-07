@@ -61,7 +61,7 @@ export default class UserController {
     );
 
     await models.User.findOneAndUpdate(
-      email,
+      { email },
       { verified: true },
       { new: true }
     );
