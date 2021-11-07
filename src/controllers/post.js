@@ -118,7 +118,7 @@ export default class PostController {
     const createdComment = await models.Comment.create(newComment);
     await models.Post.updateOne(
       { _id: postId },
-      { $addToSet: { comment: [createdComment._id] }, },
+      { $addToSet: { comments: [createdComment._id] }, },
       { new: true },
     );
     return successResponse(
@@ -144,7 +144,10 @@ export default class PostController {
         path: "likes",
         select: "username firstName lastName",
       },
-      { path: "comments", populate: "owner" },
+      {
+        path: "comments",
+        populate: "owner",
+      },
     ]).lean();
     return successResponse(
       res,
@@ -170,7 +173,7 @@ export default class PostController {
         path: "likes",
         select: "username firstName lastName",
       },
-      { path: "comments", populate: "owner" },
+      { path: "comments", populate: "owner", select: "username firstName lastName" },
     ]).lean();
     if (!Post) { return res.status(404).json({ status: 404, error: "Post not found." }); }
     return successResponse(
