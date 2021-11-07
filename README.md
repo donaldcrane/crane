@@ -2,17 +2,12 @@
 
 [![Node.js CI](https://github.com/donaldcrane/crane/actions/workflows/node.js.yml/badge.svg)](https://github.com/donaldcrane/crane/actions/workflows/node.js.yml)
 
-A detailed documentation of the api can be found here: [API Documentation](https://documenter.getpostman.com/view/11971882/UVC3k85M)
-
 [![Coverage Status](https://coveralls.io/repos/github/donaldcrane/crane/badge.svg?branch=main)](https://coveralls.io/github/donaldcrane/crane?branch=main)
 
-TWITEE is a mini and substandard runoff of Twitter. Users register and login and can put up
-anything that crosses their mind.
+CRANE a RESTful API service for a simple social network platform.
 
 # Documentation
-
-A detailed documentation of the api can be found here: [API Documentation]()
-
+A detailed documentation of the api can be found here: [API Documentation](https://documenter.getpostman.com/view/11971882/UVC3k85M)
 **Run Project Locally**
 
 - Clone the project
