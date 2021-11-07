@@ -18,14 +18,20 @@ export default class UserController {
    * @returns {object} Success message
    */
   static async createUser(req, res) {
-    const { username, email, password } = req.body;
+    const {
+      username, phone, email, password
+    } = req.body;
     const emailExist = await models.User.findOne({ email });
     if (emailExist) {
       return res.status(409).json({ status: 409, error: "email already registered by another user." });
     }
+    const phoneExist = await models.User.findOne({ phone });
+    if (phoneExist) {
+      return res.status(409).json({ status: 409, error: "phone number already used by another user." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     await models.User.create({
-      username, email, password: hashedPassword,
+      username, email, password: hashedPassword, phone
     });
     const token = Math.floor(Math.random() * 314112 + 12124);
     await models.Otp.create({ token, email });
@@ -116,10 +122,10 @@ export default class UserController {
    */
   static async updateProfile(req, res) {
     const { _id } = req.user;
-    const { phone, firstName, lastName } = req.body;
+    const { firstName, lastName } = req.body;
     const user = await models.User.findByIdAndUpdate(
       { _id },
-      { phone, firstName, lastName },
+      { firstName, lastName },
       { new: true }
     ).select("-password");
     return successResponse(
