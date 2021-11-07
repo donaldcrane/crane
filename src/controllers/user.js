@@ -45,9 +45,7 @@ export default class UserController {
     const { token, email } = req.body;
     const validOtp = await models.Otp.findOne({ token });
     if (!validOtp || validOtp.expired) {
-      throw new errors.DocumentMissingError(
-        "Token is invalid or expired, request for a new Token."
-      );
+      return res.status(401).json({ status: 401, error: "Token is invalid or expired, request for a new Token." });
     }
 
     await models.Otp.findByIdAndUpdate(
@@ -100,9 +98,9 @@ export default class UserController {
   static async uploadPicture(req, res) {
     const { _id } = req.user;
     const userExist = await models.User.findById({ _id });
-    if (!userExist) throw new errors.ConflictError("User Does Not Exist.");
+    if (!userExist) { return res.status(409).json({ status: 409, error: "User Does Not Exist." }); }
 
-    if (!req.file) throw new errors.ConflictError("you have to upload an image");
+    if (!req.file) { return res.status(409).json({ status: 409, error: "you have to upload an image" }); }
     const user = await models.User.findByIdAndUpdate(
       { _id },
       { profilePhoto: req.file.path },
@@ -140,7 +138,7 @@ export default class UserController {
   static async recoverAccount(req, res) {
     const { email } = req.body;
     const user = await models.User.findOne({ email });
-    if (!user) throw new errors.DocumentMissingError("The phone number does not exist");
+    if (!user) { return res.status(409).json({ status: 409, error: "The phone number does not exist" }); }
     const token = Math.floor(Math.random() * 314112 + 12124);
     await models.Otp.create({ token, user: user._id, email });
     await sendResetPasswordEmail(email, token);
@@ -162,9 +160,9 @@ export default class UserController {
     const userOtp = await models.Otp.findOne({ token });
     const user = await models.User.findOne({ email: userOtp.email });
 
-    if (!userOtp || userOtp.expired) throw new errors.DocumentMissingError("Token is invalid or expired.");
+    if (!userOtp || userOtp.expired) { return res.status(404).json({ status: 404, error: "Token is invalid or expired" }); }
     if (password !== retypePassword) {
-      throw new errors.ConflictError("Password MissMatch.");
+      return res.status(409).json({ status: 409, error: "Password MissMatch." });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const passwordDetails = { password: hashedPassword };

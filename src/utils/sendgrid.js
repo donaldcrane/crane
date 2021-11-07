@@ -3,7 +3,7 @@ import config from "../config";
 
 sendMail.setApiKey(config.SENDGRID_API_KEY);
 const msg = {
-  from: `Twitee <${config.SENDGRID_EMAIL}>`,
+  from: `Donaldcrane <${config.SENDGRID_EMAIL}>`,
   mail_settings: {
     sandbox_mode: {
       enable: false,

@@ -15,6 +15,7 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
   keys: config.COOKIE_KEY,
 }));
+
 app.use("/api/v1", router);
 
 app.get("/", (req, res) => res.send({ message: `Welcome to ${config.APP_NAME} server!` }));

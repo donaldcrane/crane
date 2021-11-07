@@ -4,6 +4,8 @@
 
 A detailed documentation of the api can be found here: [API Documentation](https://documenter.getpostman.com/view/11971882/UVC3k85M)
 
+[![Coverage Status](https://coveralls.io/repos/github/donaldcrane/crane/badge.svg?branch=main)](https://coveralls.io/github/donaldcrane/crane?branch=main)
+
 TWITEE is a mini and substandard runoff of Twitter. Users register and login and can put up
 anything that crosses their mind.
 
